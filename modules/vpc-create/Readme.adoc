@@ -1,0 +1,64 @@
+= Create the EKS VPC
+
+==== Prerequisites
+In order to complete this lab you will require at least the following tools.
+
+* AWS Account
+* AWS CLI Tools
+
+===== Launch the CloudFormation Stack
+EKS Suggests launching a single EKS Cluster into a VPC. We will make use of the EKS VPC CloudFormation template provided by the EKS Service to make this deployment easy.
+
+[source,bash]
+----
+aws cloudformation create-stack \
+--stack-name "eks-howto-launch-workshop" \
+--template-url "https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/amazon-eks-vpc-sample.yaml"
+----
+
+==== Expected Output
+You should expect an output similar to this.
+[source,json]
+----
+{
+    "StackId": "arn:aws:cloudformation:us-west-2:<accountID>:stack/eks-howto-launch-workshop/3fa5de50-86f3-11e8-8d44-50a686be73f2"
+}
+----
+
+TIP: The creation of the EKS VPC Stack can take a few minutes. We suggest continuing with the next lab while this happens. Then returning to this lab before doing the Lab "Launch your Cluster"
+
+==== Get Stack Outputs
+The created stack has information we need to launch our EKS Cluster. Let's get that information using the AWS CLI tool.
+[source,bash]
+----
+aws cloudformation describe-stacks --stack-name "eks-howto-launch-workshop" --query "Stacks[0].[StackStatus,Outputs]"
+----
+
+==== Expected Output
+You should expect an output similar to this.
+[source,json]
+----
+[
+    "CREATE_COMPLETE",
+    [
+        {
+            "OutputKey": "SecurityGroups",
+            "OutputValue": "sg-a1c134b1",
+            "Description": "Security group for the cluster control plane communication with worker nodes"
+        },
+        {
+            "OutputKey": "VpcId",
+            "OutputValue": "vpc-f00cd288",
+            "Description": "The VPC Id"
+        },
+        {
+            "OutputKey": "SubnetIds",
+            "OutputValue": "subnet-760047e0,subnet-19a0c163,subnet-81d8892b",
+            "Description": "All subnets in the VPC"
+        }
+    ]
+]
+----
+
+==== Next Module
+Now that you have your VPC ready, you can Launch your EKS cluster. Next you have to download and configure the Kubernetes CLI and tools used to interact with your cluster. If you have already configured the Kubernetes CLI as suggested earlier, you can skip the next module and go straight to "Launch your Cluster"
