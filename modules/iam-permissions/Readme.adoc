@@ -1,0 +1,93 @@
+= Setting up IAM permissions
+
+==== Prerequisites
+In order to complete this lab you will require at least the following tools.
+
+* AWS Account
+* AWS CLI Tools
+
+==== Create the EKS Service Role.
+First we need to create the IAM Role that EKS will use to manage your EKS Cluster.
+image:img/output-create-eks-iam-role.png[Create EKS Cluster,150,150,float="right"]
+[source,bash]
+----
+aws iam create-role --role-name "eks-service-role-workshop" \
+--assume-role-policy-document file://assets/eks-iam-trust-policy.json \
+--description "EKS Service role created through the HOWTO workshop"
+----
+
+===== Expected output
+[source,json]
+----
+{
+    "Role": {
+        "Path": "/",
+        "RoleName": "eks-service-role-workshop",
+        "RoleId": "AVCGJWID3V2LL6TVB45XO",
+        "Arn": "arn:aws:iam::<AccountId>:role/eks-service-role-workshop",
+        "CreateDate": "2018-07-13T22:34:04.944Z",
+        "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Service": "eks.amazonaws.com"
+                    },
+                    "Action": "sts:AssumeRole"
+                }
+            ]
+        }
+    }
+}
+----
+
+===== Attach the IAM Policies
+We have now created the IAM Role for the EKS Service. At the moment, it still has no permissions and cannot do anything. So we need to attach IAM Policies to the role to grant it permissions. EKS has pre-created two policies that we can use.
+
+TIP: Expect to see no output from these two commands. Only failure of the commands will produce an output.
+
+====== EKS Cluster Policy
+[source,bash]
+----
+aws iam attach-role-policy \
+--role-name "eks-service-role-workshop" \
+--policy-arn arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
+----
+
+====== EKS Service Policy
+[source,bash]
+----
+aws iam attach-role-policy \
+--role-name "eks-service-role-workshop" \
+--policy-arn arn:aws:iam::aws:policy/AmazonEKSServicePolicy
+----
+
+===== Verify the IAM Role
+Now that we have the role and the policies attached. Let's verify that everything went as we expected.
+
+[source,bash]
+----
+aws iam list-attached-role-policies \
+--role-name "eks-service-role-workshop"
+----
+
+===== Expected output
+[source,json]
+----
+{
+    "AttachedPolicies": [
+        {
+            "PolicyName": "AmazonEKSClusterPolicy",
+            "PolicyArn": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+        },
+        {
+            "PolicyName": "AmazonEKSServicePolicy",
+            "PolicyArn": "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+        }
+    ]
+}
+----
+
+==== Next Module
+You now have the IAM Role and Permissions required to Launch an EKS cluster. The next step is to create the VPC that your EKS cluster will be launched into.
