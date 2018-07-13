@@ -1,0 +1,61 @@
+= Getting Ready for this Lab
+
+==== Prerequisites
+In order to complete this lab you will require at least the following tools.
+
+* AWS Account
+** This account must have the ability to create new IAM roles and scope other IAM permissions.
+* Docker
+* Git
+
+==== Getting ready to access AWS
+We first need to make sure that you can successfully make requests using the https://aws.amazon.com/cli/[_AWS CLI TOOL_]. If you already have access to the `AWS CLI` you can skip to the <<Testing your CLI>> section of the walktrhough ,
+
+===== Pull the AWS CLI docker image
+[source,bash]
+----
+docker pull cloudsamurai/aws-cli
+----
+
+===== Configure an alias
+To make it simple to use the cli, we are going to create a shell alias.
+[source,bash]
+----
+alias aws='docker run --rm -ti -v $HOME/.aws:/home/aws-user/.aws -v `pwd`:/home/aws-user/workspace/ aws-cli:latest'
+----
+
+==== Configure the AWS CLI credentials.
+Now that you have an alias pointing to the AWS CLI Container, run the configure command to set up your AWS Credentials.
+[source,bash]
+----
+aws configure
+----
+
+Expect to see a similar output to the one below. Make sure to choose `json` as your output format.
+[source,text]
+----
+AWS Access Key ID [****************12AB]:
+AWS Secret Access Key [****************N/Fx]:
+Default region name [None]: us-west-2
+Default output format [None]: json
+----
+
+==== Testing your CLI
+Copy and paste the below command to test whether your CLI is working as expected. You should expect to see `Your CLI is Working`. If you don't see that. Please read the Troubleshooting options below.
+[source,bash]
+----
+aws s3 ls &> /dev/null  &&[[ $? -eq 0 ]] && echo "Your CLI is Working" || echo "Your CLI is not working"
+----
+
+==== Troubleshooting
+
+===== I am using environment Variables instead of AWS Config files
+====== Alias to use when using AWS Environment Variables
+[source,bash]
+----
+alias aws='docker run --rm -ti -v $HOME/.aws:/home/aws-user/.aws -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-} -e  AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-} -e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN:-} -v `pwd`:/home/aws-user/workspace/ aws-cli:latest'
+----
+
+==== Next Module
+Now that you can do some basic tasks with your aws cli, we can move on to the next module where we will set up the IAM roles and permissions you will need to launch an EKS cluster.
+
