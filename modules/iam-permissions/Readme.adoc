@@ -8,7 +8,6 @@ In order to complete this lab you will require at least the following tools.
 
 ==== Create the EKS Service Role.
 First we need to create the IAM Role that EKS will use to manage your EKS Cluster.
-image:img/output-create-eks-iam-role.png[Create EKS Cluster,150,150,float="right"]
 [source,bash]
 ----
 aws iam create-role --role-name "eks-service-role-workshop" \
