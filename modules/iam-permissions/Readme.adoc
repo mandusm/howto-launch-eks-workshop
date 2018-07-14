@@ -41,6 +41,8 @@ aws iam create-role --role-name "eks-service-role-workshop" \
 }
 ----
 
+TIP: Make Sure to copy the `Arn` from the output above to somewhere you will remember. You will need this again later when launching the EKS cluster.
+
 ===== Attach the IAM Policies
 We have now created the IAM Role for the EKS Service. At the moment, it still has no permissions and cannot do anything. So we need to attach IAM Policies to the role to grant it permissions. EKS has pre-created two policies that we can use.
 

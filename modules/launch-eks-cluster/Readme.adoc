@@ -1,0 +1,55 @@
+= Launch EKS Cluster
+
+TIP: In this lab you will reference the VPC information, as well as the IAM information in the `IAM Permissions` lab as well as the `Create Your VPC` lab. Make sure you have successfully completed those before attempting this lab.
+
+==== Create the EKS Cluster
+[source,bash]
+----
+IAM_ROLE="REPLACE_WITH_YOUR_ARN_"
+SUBNETS="COMMA_DELIMITED_LIST_OF_SUBNETS_FROM_VPC_STACK_OUTPUT"
+SECURITY_GROUP="SECURITY_GROUP_FROM_VPC_STACK_OUTPUT"
+
+aws eks create-cluster \
+--name eks-launch-workshop \
+--role-arn "REPLACE_WITH_YOUR_ARN" \
+--resources-vpc-config subnetIds=COMMA_DELIMITED_LIST_OF_SUBNETS_FROM_VPC_STACK_OUTPUT,securityGroupIds=SECURITY_GROUP_FROM_VPC_STACK_OUTPUT
+----
+
+WARNING: If your IAM user you are using for the CLI does not have administrative privileges, you must explicitly add permissions for that user to call the Amazon EKS API operations.
+
+==== Expected Output
+[source,json]
+----
+{
+    "cluster": {
+        "name": "eks-launch-workshop",
+        "arn": "arn:aws:eks:us-west-2:<accountId>:cluster/eks-launch-workshop",
+        "createdAt": 1531538739.662,
+        "version": "1.10",
+        "roleArn": "arn:aws:iam::<accountId>:role/eks-service-role-workshop",
+        "resourcesVpcConfig": {
+            "subnetIds": [
+                "subnet-990047e0",
+                "subnet-28c0w163",
+                "subnet-71d8892b"
+            ],
+            "securityGroupIds": [
+                "sg-f1c134b1"
+            ],
+            "vpcId": "vpc-d00we288"
+        },
+        "status": "CREATING",
+        "certificateAuthority": {}
+    }
+}
+----
+
+==== Cluster Validation
+Cluster provisioning usually takes less than 10 minutes. You can query the status of your cluster with the following command. When your cluster status is ACTIVE, you can proceed.
+[source,bash]
+----
+aws eks describe-cluster --name "eks-launch-workshop" --query cluster.status
+----
+
+==== Next Module
+Your cluster is now deployed and ready to accept commands from you. In the next module, we will download the certificates required to securely log into your cluster.

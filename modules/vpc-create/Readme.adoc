@@ -60,5 +60,7 @@ You should expect an output similar to this.
 ]
 ----
 
+TIP: Make Sure to copy the output above to somewhere you will remember. You will need this again later when launching the EKS cluster.
+
 ==== Next Module
 Now that you have your VPC ready, you can Launch your EKS cluster. Next you have to download and configure the Kubernetes CLI and tools used to interact with your cluster. If you have already configured the Kubernetes CLI as suggested earlier, you can skip the next module and go straight to "Launch your Cluster"
