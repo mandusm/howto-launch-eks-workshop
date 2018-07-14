@@ -1,0 +1,73 @@
+= Install EKS Tools
+
+Amazon EKS clusters require `kubectl` and `kubelet` binaries and the `Heptio Authenticator` to allow IAM authentication for your Kubernetes cluster.
+
+IMPORTANT: In this workshop we will give you the commands to download the `Mac OSX` binaries. If you are running Linux / Windows, please see the link:https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html[official EKS^] docs for the download links.
+
+==== Prep our bin folder
+[source,bash]
+----
+mkdir bin
+export PATH=`pwd`/bin:${PATH}
+----
+
+==== Install Kubectl
+Download and install kubectl for your operating system. Amazon EKS vends kubectl binaries that you can use, or you can follow the instructions in the Kubernetes documentation to install.
+
+[source,bash]
+----
+curl -kLo bin/kubectl "https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/darwin/amd64/kubectl"
+chmod +x bin/kubectl
+----
+
+==== Install Heptio Authenticator
+[source,bash]
+----
+curl -kLo bin/heptio-authenticator-aws https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/darwin/amd64/heptio-authenticator-aws
+chmod +x bin/heptio-authenticator-aws
+----
+
+==== Verify the binaries.
+We want to make sure that the binaries downloaded successfully and that they are placed on our path. Check them with the following commands.
+
+[source,bash]
+----
+kubectl version --short --client
+----
+
+[source,bash]
+----
+heptio-authenticator-aws help
+----
+
+==== Expected outputs
+[source,text]
+----
+Client Version: v1.11.0
+
+----
+[source,text]
+----
+
+A tool to authenticate to Kubernetes using AWS IAM credentials
+
+Usage:
+  heptio-authenticator-aws [command]
+
+Available Commands:
+  help        Help about any command
+  init        Pre-generate certificate, private key, and kubeconfig files for the server.
+  server      Run a webhook validation server suitable that validates tokens using AWS IAM
+  token       Authenticate using AWS IAM and get token for Kubernetes
+  verify      Verify a token for debugging purpose
+
+Flags:
+  -i, --cluster-id ID     Specify the cluster ID, a unique-per-cluster identifier for your heptio-authenticator-aws installation.
+  -c, --config filename   Load configuration from filename
+  -h, --help              help for heptio-authenticator-aws
+
+Use "heptio-authenticator-aws [command] --help" for more information about a command.
+----
+
+==== Next Module
+Now that you have your Kubernetes tools installed you can launch your EKS cluster. In the next module, you will use the outputs from the previous labs to create a new EKS cluster.
