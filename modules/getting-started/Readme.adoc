@@ -18,7 +18,9 @@ cd howto-launch-eks-workshop
 ----
 
 ==== Getting ready to access AWS
-We first need to make sure that you can successfully make requests using the https://aws.amazon.com/cli/[_AWS CLI TOOL_]. If you already have access to the `AWS CLI` you can skip to the <<Testing your CLI>> section of the walktrhough ,
+Now need to make sure that you can successfully make requests using the https://aws.amazon.com/cli/[_AWS CLI TOOL_].
+
+TIP: If you already have access to the `AWS CLI` you can skip to the `Testing Your CLI` section of the walk through below.
 
 ===== Pull the AWS CLI docker image
 [source,bash]
