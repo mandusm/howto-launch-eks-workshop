@@ -51,6 +51,8 @@ Default region name [None]: us-west-2
 Default output format [None]: json
 ----
 
+IMPORTANT: Make sure you set your Default Region as `us-west-2`.
+
 ==== Testing your CLI
 Copy and paste the below command to test whether your CLI is working as expected. You should expect to see `Your CLI is Working`. If you don't see that. Please read the Troubleshooting options below.
 [source,bash]
