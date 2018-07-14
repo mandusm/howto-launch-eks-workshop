@@ -14,3 +14,4 @@ modules:
   - "modules_eks-tools_Readme"
   - "modules_launch-eks-cluster_Readme"
   - "modules_cluster-login_Readme"
+  - "modules_add-workers_Readme"

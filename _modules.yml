@@ -11,3 +11,5 @@ modules:
     name: Launch Cluster
   modules_cluster-login_Readme:
     name: Log into Cluster
+  modules_add-workers_Readme:
+    name: Add Cluster Workers
