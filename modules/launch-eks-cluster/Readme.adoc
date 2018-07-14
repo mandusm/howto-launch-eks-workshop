@@ -5,10 +5,6 @@ TIP: In this lab you will reference the VPC information, as well as the IAM info
 ==== Create the EKS Cluster
 [source,bash]
 ----
-IAM_ROLE="REPLACE_WITH_YOUR_ARN_"
-SUBNETS="COMMA_DELIMITED_LIST_OF_SUBNETS_FROM_VPC_STACK_OUTPUT"
-SECURITY_GROUP="SECURITY_GROUP_FROM_VPC_STACK_OUTPUT"
-
 aws eks create-cluster \
 --name eks-launch-workshop \
 --role-arn "REPLACE_WITH_YOUR_ARN" \
