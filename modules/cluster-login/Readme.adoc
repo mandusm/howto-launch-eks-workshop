@@ -1,0 +1,98 @@
+= Cluster Login
+In this section, you create a kubeconfig file for your cluster.
+
+==== Cluster Configuration Data
+First, we need to get the cluster information from the AWS CLI.
+[source,bash]
+----
+aws eks describe-cluster --name eks-launch-workshop  --query cluster.[endpoint,certificateAuthority.data]
+----
+
+==== Expected Output
+[source,json]
+----
+[
+    "https://7CAF29CB2BC29F90EE3C2F8104130B1A.yl4.us-west-2.eks.amazonaws.com",
+    "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN5RENDQWJDZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRFNE1EY3hOREF6TXpJeU0xb1hEVEk0TURjeE1UQXpNekl5TTFvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYsdnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBT1JKCnVMN2ZrT0RlYVhaMVBqWnNGMVlrK1VFRCtxN05aci9DRFFXV056cd0U2TlFiUllFZWNiQWFWcjZQT3k1eVRsQnoKTWo5SmJieDFXVFZnRFpQUnZzQ2x3Nmx4c2thdXNlTEtFRGRPcWhrU3FzY05ZY0VhcjlyMld0L2F6M0UzSVBmMgpPRDJkOXprSFk5NTBMMGNpbG1XRjlOaVVSRCszcmZRYlhnNnIxZ1IxQUlvOU1Dai9CSEJZbFRyQ3NVNGpCcW5QCkJXMxcdYTjZVRkQzblZxNXpMdGN4aGFycVZWb2lSa3Baa2lUYndLVnFhZEtqV2ZEQ0NzRm84ekt1NDZvUFdPZzUKQnIybTBwdCtsLzg3RDhsUVdERDNCMEhPQ3U5Z3BvWm1PbHAweVFYUEN5VGNLQjlsd3NEMVFZdFVIS0FJd2Z3aApUWWxzak55MWpYUllIVmtCckpFQ0F3RUFBYU1qTUNFd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFDOHBUZVpubVc2STVBZjdlZm5SRHgyWktkSVcKWEJnRit0bTFlSmV6RzYzdWp0SGx2WHEzVjZTd2FFYlU0Y3lZVzdXRThMVnlWZ3d4Q3UvM28wdHA3bjkzRTdMSgowUnMrZVBFdnN5V1NJNDZlb1JjVDlyZjRrNzQ5eEpQaktCMmZoTGZpenYrSk5qT3ZkaTFodFdoLzhUQ1l0TjZSCmczVStLY255bFJWOFFGYWdYRHhGQXlpM1NGMjJqQ2M5REV4aXVEdENkeVhDQ0ZMbGJRdU5IZEVreGFNOG51bHIKcHh6dm1lUWpZMkR4M1lTUjJZeXJTS2ZyY1ZHL0ZNeCtDL2ZsUDFKQlRPTzUvZE4vaEgzcEtsaFNRYzhzV3NoeQo0NHN6MzIyYjRxcmdEZGRZOEt1MHllaER5YUJXdEhVYUhsa3Q1REJ3YStueGRDYkJldVozWFB1YWR6UT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo="
+]
+----
+
+TIP: In the output above, the URL is the endpoint URL and the subsequent string is the Base64 Encoded Certificate
+
+==== Create the KubeConfig File
+We are going to create a `.kube` folder in our current project directory.
+[source,bash]
+----
+mkdir -p .kube
+----
+
+Open your favorite text editor and copy the kubeconfig code block below into it. You will save the file to the newly create .kube folder as `config-eks-workshop`
+
+[source,bash]
+----
+vi .kube/config-eks-workshop
+----
+
+.config-eks-workshop
+[source,yaml]
+----
+apiVersion: v1
+clusters:
+- cluster:
+    server: <endpoint-url>
+    certificate-authority-data: <base64-encoded-ca-cert>
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: aws
+  name: aws
+current-context: aws
+kind: Config
+preferences: {}
+users:
+- name: aws
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1alpha1
+      command: heptio-authenticator-aws
+      args:
+        - "token"
+        - "-i"
+        - "eks-launch-workshop"
+----
+
+IMPORTANT: Make sure to replace the place holders indicated with `< >` with your cluster values.
+
+==== KubeConfig Environment
+We now need to add this new config to the KubeCtl Config List
+[source,bash]
+----
+export KUBECONFIG=$KUBECONFIG:`pwd`/.kube/config-eks-workshop
+----
+
+==== Confirm Config
+Let's confirm that your KubeConfig is available.
+[source,bash]
+----
+kubectl config view
+----
+
+You should now see the cluster with the endpoint you defined listed in your kubectl config.
+
+==== Confirm cluster status
+Let's confirm that you can communicate with the Kubernetes API for your EKS cluster
+[source,bash]
+----
+kubectl get svc
+----
+
+==== Expected Output
+[source,text]
+----
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   27m
+----
+
+==== Next Module
+Now that we have the EKS Master nodes up and running, we need to add worker nodes. In the next module, you will launch a CloudFormation template that will join worker nodes to your cluster.
