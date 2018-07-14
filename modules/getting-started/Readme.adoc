@@ -8,6 +8,15 @@ In order to complete this lab you will require at least the following tools.
 * Docker
 * Git
 
+==== Clone the GitHub Repository
+The first thing we need to do is clone the github repository and change directory into that folder.
+
+[source,bash]
+----
+git clone https://github.com/mandusm/howto-launch-eks-workshop.git
+cd howto-launch-eks-workshop
+----
+
 ==== Getting ready to access AWS
 We first need to make sure that you can successfully make requests using the https://aws.amazon.com/cli/[_AWS CLI TOOL_]. If you already have access to the `AWS CLI` you can skip to the <<Testing your CLI>> section of the walktrhough ,
 
