@@ -12,3 +12,5 @@ modules:
   - "modules_iam-permissions_Readme"
   - "modules_vpc-create_Readme"
   - "modules_eks-tools_Readme"
+  - "modules_launch-eks-cluster_Readme"
+  - "modules_cluster-login_Readme"
