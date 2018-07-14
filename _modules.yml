@@ -1,0 +1,9 @@
+modules:
+  modules_getting-started_Readme:
+    name: Getting Started
+  modules_iam-permissions_Readme:
+    name: IAM Permissions
+  modules_vpc-create_Readme:
+    name: Create your VPC
+  modules_eks-tools_Readme:
+    name: Install Kubernetes tools

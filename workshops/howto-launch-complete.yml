@@ -1,0 +1,14 @@
+---
+id: howto-launch-eks-2018
+name: Workshop
+workshop_title: "How to launch EKS Clusters"
+revision: nycsummit2018
+logo: "aws-smile.png"
+vars:
+  WORKSHOP_VERSION: v1.0
+modules:
+  activate:
+  - "modules_getting-started_Readme"
+  - "modules_iam-permissions_Readme"
+  - "modules_vpc-create_Readme"
+  - "modules_eks-tools_Readme"
