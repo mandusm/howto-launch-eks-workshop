@@ -99,5 +99,27 @@ ip-192-168-77-21.us-west-2.compute.internal     Ready     <none>    1m        v1
 ==== Congratulations!
 Congratulations. You now have a fully working Amazon EKS Cluster that is ready to use!
 
-==== Clean-Up
-Inside the git repository you cloned for the lab is a `cleanup.sh` file. If you kept with the names within this workshop, the `cleanup.sh` file will roll back all resources created during the workshop.
+==== Tear Down & Clean up.
+To clean up the resources in your AWS account that was created by this workshop. Run the following commands.
+
+[source,bash]
+----
+# Remove the Worker nodes from EKS.
+aws cloudformation delete-stack --stack-name "eks-howto-workshop-worker-nodes"
+
+# Delete the EKS Cluster
+aws eks delete-cluster --name "eks-launch-workshop"
+
+# Confirm the Cluster is deleted before removing Cluster VPC
+aws eks describe-cluster --name eks-launch-workshop --query "cluster.status"
+
+# Remove the Cluster VPC
+aws cloudformation delete-stack --stack-name "eks-howto-launch-workshop"
+
+# Detach IAM Policies from Role
+aws iam detach-role-policy --role-name "eks-service-role-workshop" --policy-arn "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+aws iam detach-role-policy --role-name "eks-service-role-workshop" --policy-arn "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+
+# Remove the IAM Role craeted for the EKS cluster.
+aws iam delete-role --role-name "eks-service-role-workshop"
+----
