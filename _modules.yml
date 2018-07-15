@@ -13,3 +13,5 @@ modules:
     name: Log into Cluster
   modules_add-workers_Readme:
     name: Add Cluster Workers
+  modules_terraform_Readme:
+    name: Launch Automation

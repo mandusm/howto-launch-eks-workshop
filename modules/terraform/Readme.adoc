@@ -1,0 +1,100 @@
+= Automation
+We also have some very powerful partner tools that allow us to automate much of the experience of creating an EKS cluster, simplifying the process.
+
+In this module, we will highlight a community created Terraform module, and use it to launch and configure our EKS cluster and nodes.
+
+TIP: The guide below provides instructions for `Mac OSX`. For Windows and Linux binaries, please consult the https://www.terraform.io/downloads.html[TerraForm Downloads].
+
+==== Terraform
+In order for us to do this, we need to download the `Terraform` binary.
+
+[source,bash]
+----
+curl -kLo /tmp/terraform.zip "https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_darwin_amd64.zip"
+unzip -d bin /tmp/terraform.zip
+chmod +x bin/terraform
+----
+
+TIP: Remember to add the `bin/` folder to your `PATH` if it hasn't already been done earlier in this lab.
+
+==== Confirm Terraform
+Let's make sure we have a working Terraform binary.
+[source,bash]
+----
+terraform version
+
+# Expected output
+# Terraform v0.11.7
+----
+
+==== Get Terraform Module
+We need to fetch the Terraform EKS module from GitHub. Clone it, and then change the directory into it.
+[source,bash]
+----
+git clone https://github.com/WesleyCharlesBlake/terraform-aws-eks.git
+cd terraform-aws-eks
+----
+
+==== Launch EKS Cluster
+[source,bash]
+----
+# Initialize the Terraform State
+terraform init
+
+# Terraform Plan the Deployment.
+terraform plan -var 'cluster-name=eks-launch-workshop' -out eks-workshop
+
+# Apply the planned Deployment.
+terraform apply "eks-workshop"
+----
+
+==== Configure your KubeCtl
+Now that we have the cluster running, we need to create the KubeConfig file that will be used to manage the cluster.
+[source,bash]
+----
+# Output KubeCtl Config
+terraform output kubeconfig > ../.kube/eks-workshop-cluster
+
+# Add Config to the KUBECONFIG PATH
+export KUBECONFIG=../.kube/eks-workshop-cluster:${KUBECONFIG}
+----
+
+==== Apply the Worker Configmap
+[source,bash]
+----
+# Generate the manifest
+terraform output config-map > config-map-aws-auth.yaml
+
+# Apply the manifest
+kubectl apply -f config-map-aws-auth.yaml
+----
+
+===== Expected Output
+[source,text]
+----
+kubectl get configmap/aws-auth created
+----
+
+==== Confirm Nodes
+[source,bash]
+----
+kubectl get nodes
+----
+
+===== Expected Output
+[source,text]
+----
+NAME                                       STATUS    ROLES     AGE       VERSION
+ip-10-0-0-213.us-west-2.compute.internal   Ready     <none>    1m        v1.10.3
+ip-10-0-1-121.us-west-2.compute.internal   Ready     <none>    1m        v1.10.3
+----
+
+You now have a fully functioning EKS cluster. Feel free to deploy some test applications to it.
+
+==== Clean Up and Tear Down
+In order to delete the resources created for this EKS cluster, run the following commands.
+[source,bash]
+----
+terraform plan -destroy
+terraform destroy
+----
