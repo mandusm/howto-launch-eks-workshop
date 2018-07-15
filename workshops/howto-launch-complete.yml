@@ -4,6 +4,8 @@ name: Workshop
 workshop_title: "How to launch EKS Clusters"
 revision: nycsummit2018
 logo: "aws-smile.png"
+enable_issue_submission: false
+repo_url: https://github.com/mandusm/howto-launch-eks-workshop
 vars:
   WORKSHOP_VERSION: v1.0
 modules:
