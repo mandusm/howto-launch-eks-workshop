@@ -1,4 +1,14 @@
 = Cluster Login
+
+==== Prerequisites
+In order to complete this lab you will require at least the following tools.
+
+* AWS Account
+* AWS CLI
+* KubeCTL
+* Heptio Authenticator
+
+==== Configure KubeCTL for Login
 In this section, you create a kubeconfig file for your cluster.
 
 ==== Cluster Configuration Data
@@ -8,7 +18,7 @@ First, we need to get the cluster information from the AWS CLI.
 aws eks describe-cluster --name eks-launch-workshop  --query cluster.[endpoint,certificateAuthority.data]
 ----
 
-==== Expected Output
+===== Expected Output
 [source,json]
 ----
 [
@@ -87,7 +97,7 @@ Let's confirm that you can communicate with the Kubernetes API for your EKS clus
 kubectl get svc
 ----
 
-==== Expected Output
+===== Expected Output
 [source,text]
 ----
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE

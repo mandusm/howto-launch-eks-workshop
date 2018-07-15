@@ -1,4 +1,12 @@
 = Automation
+
+==== Prerequisites
+In order to complete this lab you will require at least the following tools.
+
+* AWS Account
+* AWS CLI
+
+==== Partner Tools
 We also have some very powerful partner tools that allow us to automate much of the experience of creating an EKS cluster, simplifying the process.
 
 In this module, we will highlight a community created Terraform module, and use it to launch and configure our EKS cluster and nodes.

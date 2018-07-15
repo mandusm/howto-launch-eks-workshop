@@ -1,5 +1,11 @@
 = Launch EKS Cluster
 
+==== Prerequisites
+In order to complete this lab you will require at least the following tools.
+
+* AWS Account
+* AWS CLI
+
 TIP: In this lab you will reference the VPC information, as well as the IAM information in the `IAM Permissions` lab as well as the `Create Your VPC` lab. Make sure you have successfully completed those before attempting this lab.
 
 ==== Create the EKS Cluster

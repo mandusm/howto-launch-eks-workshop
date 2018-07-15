@@ -1,5 +1,12 @@
 = Install EKS Tools
 
+==== Prerequisites
+In order to complete this lab you will require at least the following tools.
+
+* AWS Account
+* AWS CLI
+
+==== Prepare Tools
 Amazon EKS clusters require `kubectl` and `kubelet` binaries and the `Heptio Authenticator` to allow IAM authentication for your Kubernetes cluster.
 
 IMPORTANT: In this workshop we will give you the commands to download the `Mac OSX` binaries. If you are running Linux / Windows, please see the link:https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html[official EKS^] docs for the download links.

@@ -1,8 +1,15 @@
 = Cluster workers
-Now that your VPC and Kubernetes control plane are created, you can launch and configure your worker nodes.
+
+==== Prerequisites
+In order to complete this lab you will require at least the following tools.
+
+* AWS Account
+* AWS CLI
+* KubeCTL
+* Heptio Authenticator
 
 ==== Launch the Worker Template
-We will now use CloudFormation to launch worker nodes that will connect to the EKS cluster.
+Now that your VPC and Kubernetes control plane are created, you can launch and configure your worker nodes. We will now use CloudFormation to launch worker nodes that will connect to the EKS cluster.
 
 [source,bash]
 ----
@@ -29,7 +36,7 @@ We now need to verify the stack create status and get some additional output inf
 aws cloudformation describe-stacks --stack-name "eks-howto-workshop-worker-nodes" --query "Stacks[0].[StackStatus,Outputs]"
 ----
 
-==== Expected Output
+===== Expected Output
 
 [source,json]
 ----
@@ -73,7 +80,7 @@ Apply the newly created ConfigMap
 kubectl apply -f worker-configmap.yml
 ----
 
-==== Expected Output
+===== Expected Output
 [source,text]
 ----
 configmap/aws-auth created
@@ -87,7 +94,7 @@ You should now see the status of your nodes as they become ready.
 kubectl get nodes --watch
 ----
 
-==== Expected Output
+===== Expected Output
 [source,text]
 ----
 NAME                                            STATUS    ROLES     AGE       VERSION
