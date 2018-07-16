@@ -32,7 +32,7 @@ docker pull cloudsamurai/aws-cli
 To make it simple to use the cli, we are going to create a shell alias.
 [source,bash]
 ----
-alias aws='docker run --rm -ti -v $HOME/.aws:/home/aws-user/.aws -v `pwd`:/home/aws-user/workspace/ aws-cli:latest'
+alias aws='docker run --rm -ti -v $HOME/.aws:/home/aws-user/.aws -v `pwd`:/home/aws-user/workspace/ cloudsamurai/aws-cli:latest'
 ----
 
 ==== Configure the AWS CLI credentials.
@@ -66,7 +66,7 @@ aws s3 ls &> /dev/null  &&[[ $? -eq 0 ]] && echo "Your CLI is Working" || echo "
 ====== Alias to use when using AWS Environment Variables
 [source,bash]
 ----
-alias aws='docker run --rm -ti -v $HOME/.aws:/home/aws-user/.aws -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-} -e  AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-} -e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN:-} -v `pwd`:/home/aws-user/workspace/ aws-cli:latest'
+alias aws='docker run --rm -ti -v $HOME/.aws:/home/aws-user/.aws -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-} -e  AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-} -e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN:-} -v `pwd`:/home/aws-user/workspace/ cloudsamurai/aws-cli:latest'
 ----
 
 ==== Next Module
