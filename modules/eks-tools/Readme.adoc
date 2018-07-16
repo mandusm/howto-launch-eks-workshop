@@ -21,11 +21,27 @@ export PATH=`pwd`/bin:${PATH}
 ==== Install Kubectl
 Download and install kubectl for your operating system. Amazon EKS vends kubectl binaries that you can use, or you can follow the instructions in the Kubernetes documentation to install.
 
+`MacOS`
 [source,bash]
 ----
 curl -kLo bin/kubectl "https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/darwin/amd64/kubectl"
 chmod +x bin/kubectl
 ----
+
+`Windows`
+[source,bash]
+----
+curl -kLo bin/kubectl "https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/windows/amd64/kubectl.exe"
+chmod +x bin/kubectl
+---- 
+
+`*Assuming you have you cURL installed on Windows, if not you can download the file directly using the link` 
+
+`Linux`
+----
+curl -kLo bin/kubectl "https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/linux/amd64/kubectl"
+chmod +x bin/kubectl
+---- 
 
 ==== Install Heptio Authenticator
 [source,bash]
