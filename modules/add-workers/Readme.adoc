@@ -53,23 +53,14 @@ aws cloudformation describe-stacks --stack-name "eks-howto-workshop-worker-nodes
 ----
 
 ==== Create Worker ConfigMap
-Using your favorite text editor, create a new file called `worker-configmap.yml` and put the below content into it. Replace the `rolearn` value with the value you got from the output above.
+Using your favorite text editor, open the file found in the github repository at `assets/worker-configmap.yml`. Edit the `rolearn` value with the output generated above.
 
-.worker-configmap.yml
+===== For Example
 [source,yaml]
 ----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: aws-auth
-  namespace: kube-system
 data:
   mapRoles: |
-    - rolearn: "<ARN of instance role (not instance profile)>"
-      username: system:node:{{EC2PrivateDNSName}}
-      groups:
-        - system:bootstrappers
-        - system:nodes
+    - rolearn: "arn:aws:iam::<account-id>:role/eks-howto-workshop-worker-nodes-NodeInstanceRole-1OE271RG9YTPY"
 ----
 
 ==== Apply ConfigMap
