@@ -44,11 +44,27 @@ chmod +x bin/kubectl
 ---- 
 
 ==== Install Heptio Authenticator
+`MacOS`
 [source,bash]
 ----
 curl -kLo bin/heptio-authenticator-aws https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/darwin/amd64/heptio-authenticator-aws
 chmod +x bin/heptio-authenticator-aws
 ----
+
+`Windows`
+[source,bash]
+----
+curl -kLo bin/heptio-authenticator-aws https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/windows/amd64/heptio-authenticator-aws.exe
+----
+
+`Linux`
+[source,bash]
+----
+curl -kLo bin/heptio-authenticator-aws 
+https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/linux/amd64/heptio-authenticator-aws
+chmod +x bin/heptio-authenticator-aws
+----
+
 
 ==== Verify the binaries.
 We want to make sure that the binaries downloaded successfully and that they are placed on our path. Check them with the following commands.
