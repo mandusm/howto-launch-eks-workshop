@@ -28,7 +28,7 @@ curl -kLo bin/kubectl "https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018
 chmod +x bin/kubectl
 ----
 
-WARN: Windows Powershell wraps the `Invoke-WebRequest` cmdlet into an alias for `curl`. We recommend downloading the binary through your browser and moving the binary to the correct folder using the UI.  
+WARNING: Windows Powershell wraps the `Invoke-WebRequest` cmdlet into an alias for `curl`. We recommend downloading the binary through your browser and moving the binary to the correct folder using the UI.  
 
 `Windows`
 [source,bash]
