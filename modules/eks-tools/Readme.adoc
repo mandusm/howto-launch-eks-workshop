@@ -28,14 +28,14 @@ curl -kLo bin/kubectl "https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018
 chmod +x bin/kubectl
 ----
 
+WARN: Windows Powershell wraps the `Invoke-WebRequest` cmdlet into an alias for `curl`. We recommend downloading the binary through your browser and moving the binary to the correct folder using the UI.  
+
 `Windows`
 [source,bash]
 ----
 curl -kLo bin/kubectl "https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/windows/amd64/kubectl.exe"
 chmod +x bin/kubectl
 ---- 
-
-TIP: Assuming you have you cURL installed on Windows, if not you can download the file directly using the link
 
 `Linux`
 ----
