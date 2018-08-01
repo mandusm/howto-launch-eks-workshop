@@ -1,95 +1,19 @@
 = Getting Ready for this Lab
+:imagesdir: ../../img
 
 ==== Prerequisites
 In order to complete this lab you will require at least the following tools.
 
 * AWS Account
 ** This account must have the ability to create new IAM roles and scope other IAM permissions.
-* Docker
-* Git
 
-==== Clone the GitHub Repository
-The first thing we need to do is clone the github repository and change directory into that folder.
+==== Create a cloud9 environment in your account:
 
-[source,bash]
-----
-git clone https://github.com/mandusm/howto-launch-eks-workshop.git
-cd howto-launch-eks-workshop
-----
+image::c9-create.gif[]
 
-==== Getting ready to access AWS
-We now need to make sure that you can successfully make requests using the https://aws.amazon.com/cli/[_AWS CLI TOOL_].
+==== Allow Cloud 9 Proper IAM permissions
 
-TIP: If you already have access to the `AWS CLI` you can skip to the `Testing Your CLI` section of the walk through below.
-
-===== Pull the AWS CLI docker image
-[source,bash]
-----
-docker pull cloudsamurai/aws-cli
-----
-
-===== Configure an alias
-To make it simple to use the cli, we are going to create a shell alias.
-[source,bash]
-----
-alias aws='docker run --rm -ti -v $HOME/.aws:/home/aws-user/.aws -v `pwd`:/home/aws-user/workspace/ cloudsamurai/aws-cli:latest'
-----
-
-Create .aws directory where AWS credentials and configurations are stored
-[source,bash]
-----
-mkdir -p ~/.aws/ && touch ~/.aws/credentials ~/.aws/config && chmod 666 ~/.aws/credentials ~/.aws/config
-----
-
-==== Create Access Key ID and Secret Access Key.
-First we need to create the Access Key ID and Secret Access Key which are used to sign programmatic requests that you make to AWS. If you don't have access keys, you can create them from the AWS Management Console. We recommend that you use IAM access keys instead of AWS account root user access keys. IAM lets you securely control access to AWS services and resources in your AWS account. 
-
-The only time that you can view or download the secret access keys is when you create the keys. You cannot recover them later. However, you can create new access keys at any time. You must also have permissions to perform the required IAM actions. For more information, see Permissions Required to Access IAM Resources in the IAM User Guide. 
-
-. Login to the AWS console
-. Open the IAM console. 
-. In the navigation pane of the console, choose `Users`. 
-. Choose your IAM user name (not the check box).
-. Choose the `Security credentials` tab and then choose `Create access key`. 
-. To see the new access key, choose `Show`. Your credentials will look something like this: 
-* Access key ID: `AKIAIOSFODNN7EXAMPLE`
-* Secret access key: `wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY`
-. To download the key pair, choose `Download .csv` file. Store the keys in a secure location. 
-
-
-==== Configure the AWS CLI credentials.
-Now that you have an alias pointing to the AWS CLI Container, run the configure command to set up your AWS Credentials. Use the Access Key ID and Secret Access Key you downloaded in csv format in the step above. 
-[source,bash]
-----
-aws configure
-----
-
-Expect to see a similar output to the one below. Make sure to choose `json` as your output format.
-[source,text]
-----
-AWS Access Key ID [****************12AB]:
-AWS Secret Access Key [****************N/Fx]:
-Default region name [None]: us-west-2
-Default output format [None]: json
-----
-
-IMPORTANT: Make sure you set your Default Region as `us-west-2`.
-
-==== Testing your CLI
-Copy and paste the below command to test whether your CLI is working as expected. You should expect to see `Your CLI is Working`. If you don't see that. Please read the Troubleshooting options below.
-[source,bash]
-----
-aws s3 ls &> /dev/null  &&[[ $? -eq 0 ]] && echo "Your CLI is Working" || echo "Your CLI is not working"
-----
-
-==== Troubleshooting
-
-===== I am using environment Variables instead of AWS Config files
-====== Alias to use when using AWS Environment Variables
-[source,bash]
-----
-alias aws='docker run --rm -ti -v $HOME/.aws:/home/aws-user/.aws -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-} -e  AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-} -e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN:-} -v `pwd`:/home/aws-user/workspace/ cloudsamurai/aws-cli:latest'
-----
+image::c9-iam.gif[]
 
 ==== Next Module
 Now that you can do some basic tasks with your aws cli, we can move on to the next module where we will set up the IAM roles and permissions you will need to launch an EKS cluster.
